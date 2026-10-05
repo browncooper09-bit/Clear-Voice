@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f8fafc">
+  <meta name="description" content="ClarityAAC, a low-stimulation augmentative and alternative communication board.">
+  <title>ClarityAAC</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#communication-board">Skip to communication board</a>
+
+  <header class="app-header">
+    <div class="brand-row">
+      <div>
+        <h1>ClarityAAC</h1>
+        <p class="subtitle">Tap a picture or word to build a message.</p>
+      </div>
+      <div class="header-actions">
+        <label class="focus-control">
+          <input id="focus-toggle" type="checkbox" role="switch">
+          <span>Focus mode</span>
+        </label>
+        <button id="mask-button" class="quiet-button" type="button" hidden>Choose visible tiles</button>
+        <button id="admin-hold" class="quiet-button" type="button" aria-describedby="hold-help">Caregiver</button>
+        <span id="hold-help" class="sr-only">Press and hold for 3 seconds to open caregiver settings.</span>
+      </div>
+    </div>
+
+    <section class="sentence-area" aria-labelledby="sentence-heading">
+      <div class="sentence-heading-row">
+        <h2 id="sentence-heading">My message</h2>
+        <span id="status-message" class="status" role="status" aria-live="polite"></span>
+      </div>
+      <div id="sentence-strip" class="sentence-strip" aria-live="polite" aria-label="Current message">
+        <span class="sentence-placeholder">Your words will appear here.</span>
+      </div>
+      <div class="sentence-actions">
+        <button id="speak-sentence" class="primary-button" type="button">🔊 Speak message</button>
+        <button id="delete-last" class="secondary-button" type="button">⌫ Delete last</button>
+        <button id="clear-sentence" class="secondary-button" type="button">Clear all</button>
+      </div>
+    </section>
+
+    <nav id="quick-strip" class="quick-strip" aria-label="Quick responses"></nav>
+  </header>
+
+  <main id="communication-board" class="app-main" tabindex="-1">
+    <div class="board-toolbar">
+      <div>
+        <p class="eyebrow">Current board</p>
+        <h2 id="board-title">Core words</h2>
+      </div>
+      <button id="back-button" class="secondary-button" type="button" hidden>← Core words</button>
+    </div>
+    <section id="tile-grid" class="tile-grid" aria-label="Communication tiles"></section>
+  </main>
+
+  <div id="mask-dialog" class="modal" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="mask-title">
+      <div class="drawer-heading">
+        <div><p class="eyebrow">Focus mode</p><h2 id="mask-title">Choose visible tiles</h2></div>
+        <button class="icon-button" data-close="mask-dialog" type="button" aria-label="Close">×</button>
+      </div>
+      <p>Turn off tiles that are not needed right now. Their spaces stay in place.</p>
+      <div id="mask-list" class="mask-list"></div>
+      <button id="show-all" class="secondary-button" type="button">Show all tiles</button>
+    </div>
+  </div>
+
+  <div id="pin-dialog" class="modal" hidden>
+    <form id="pin-form" class="modal-card" role="dialog" aria-modal="true" aria-labelledby="pin-title">
+      <div class="drawer-heading">
+        <h2 id="pin-title">Caregiver access</h2>
+        <button class="icon-button" data-close="pin-dialog" type="button" aria-label="Close">×</button>
+      </div>
+      <label for="pin-input">Enter caregiver PIN</label>
+      <input id="pin-input" type="password" inputmode="numeric" maxlength="8" autocomplete="off" required>
+      <p class="hint">Prototype PIN: 2468. Change it in caregiver settings.</p>
+      <p id="pin-error" class="error" role="alert"></p>
+      <button class="primary-button" type="submit">Open settings</button>
+    </form>
+  </div>
+
+  <aside id="admin-drawer" class="drawer" aria-labelledby="drawer-title" aria-hidden="true">
+    <div class="drawer-heading">
+      <div><p class="eyebrow">Caregiver area</p><h2 id="drawer-title">Add a communication tile</h2></div>
+      <button id="close-drawer" class="icon-button" type="button" aria-label="Close caregiver settings">×</button>
+    </div>
+
+    <form id="tile-form">
+      <label for="tile-label">Word or short phrase</label>
+      <input id="tile-label" maxlength="32" required placeholder="Example: Grandma">
+
+      <label for="tile-category">Board</label>
+      <select id="tile-category"></select>
+
+      <fieldset>
+        <legend>Picture</legend>
+        <label for="tile-icon">Built-in symbol</label>
+        <select id="tile-icon"></select>
+        <label for="tile-image">Or upload a photo</label>
+        <input id="tile-image" type="file" accept="image/*">
+        <p class="hint">Photos stay on this device in browser storage.</p>
+      </fieldset>
+
+      <button id="preview-voice" class="secondary-button" type="button">🔊 Preview voice</button>
+      <button class="primary-button" type="submit">Add to next empty space</button>
+      <p id="form-message" class="status" role="status"></p>
+    </form>
+
+    <hr>
+    <section aria-labelledby="voice-heading">
+      <h3 id="voice-heading">Voice and access</h3>
+      <label for="speech-rate">Speech speed</label>
+      <input id="speech-rate" type="range" min="0.6" max="1.2" step="0.1" value="0.9">
+      <label for="new-pin">New caregiver PIN</label>
+      <input id="new-pin" type="password" inputmode="numeric" maxlength="8" placeholder="4 to 8 digits">
+      <button id="save-settings" class="secondary-button" type="button">Save settings</button>
+      <button id="reset-board" class="danger-subtle" type="button">Reset prototype board</button>
+    </section>
+  </aside>
+  <div id="drawer-backdrop" class="backdrop" hidden></div>
+</body>
+</html>
