@@ -32,3 +32,7 @@ This is a functional prototype, not a medical device. Test vocabulary, symbols, 
 - Add multilingual vocabulary and voice selection
 - Add automated accessibility and browser tests
 - Create a service worker for installable offline use
+
+
+##Live Link
+https://browncooper09-bit.github.io/Clear-Voice/
