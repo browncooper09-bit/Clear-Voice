@@ -1,4 +1,4 @@
-# ClarityAAC
+# ClearVoice
 
 A dependency-free, low-stimulation AAC board prototype built with HTML, CSS, and JavaScript.
 
